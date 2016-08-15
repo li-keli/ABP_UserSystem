@@ -17,8 +17,8 @@ namespace Cbd.Fgw.EntityFramework.Migrations {
             {
                 new Department
                 {
-                    DepartmentName = "朝阳区发改委",
-                    Describe = "朝阳区发改委，本系统根组织",
+                    DepartmentName = "朝阳区",
+                    Describe = "朝阳区，本系统根组织",
                     IsSystem = true
                 },
                 new Department

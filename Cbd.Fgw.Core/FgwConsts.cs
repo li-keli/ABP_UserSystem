@@ -2,6 +2,6 @@
 {
     public class FgwConsts
     {
-        public const string LocalizationSourceName = "发改委项目管理平台";
+        public const string LocalizationSourceName = "项目管理平台";
     }
 }
