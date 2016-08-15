@@ -1,0 +1,126 @@
+﻿@model Cbd.Fgw.Application.System.User.Dto.UserCreateInput
+@{
+    ViewBag.Title = "创建用户";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="~/Content/plugs/Ztree/metroStyle.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Scripts/plugs/Ztree/jquery.ztree.all.min.js"></script>
+
+    @if (!ViewData.ModelState.IsValid) {
+        <script>
+            var error = adderror('@Html.ValidationMessageFor(u => u.UserName, "", new {@class = "text-danger"})') +
+                adderror('@Html.ValidationMessageFor(u => u.RealName, "", new {@class = "text-danger"})') +
+                adderror('@Html.ValidationMessageFor(u => u.Pwd, "", new {@class = "text-danger"})') +
+                adderror('@Html.ValidationMessageFor(u => u.PwdAgain, "", new {@class = "text-danger"})');
+            $.sys.showError(error);
+
+        </script>
+    }
+    else {
+        if (ViewBag.Success != null) {
+            <script>
+                $(function() {
+                    $.sys.alertClose("用户创建成功！", { icon: 2 });
+                });
+            </script>
+        }
+    }
+
+    <script type="text/javascript">
+        var setting = {
+            view: {
+                selectedMulti: false
+            },
+            async: {
+                enable: true,
+                type: "get",
+                url: '@Url.Action("GetJsonByAsync", "Department")',
+                autoParam: ["id"],
+                dataFilter: filter
+            },
+            callback: {
+                beforeClick: BeforeCheck
+            }
+        };
+
+        function filter(treeId, parentNode, childNodes) {
+            if (!childNodes) return null;
+            for (var i = 0, l = childNodes.length; i < l; i++) {
+                childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+            }
+            return childNodes;
+        }
+
+
+        function BeforeCheck(treeId, treeNode) {
+            parent.layer.msg("选中了：" + treeNode.name, { icon: 0 });
+            $('#DepartmentId').val(treeNode.id);
+        }
+
+        $(document).ready(function() {
+            $.fn.zTree.init($("#departmentTree"), setting);
+        });
+
+    </script>
+}
+
+<div class="well bs-component">
+    @using (Html.BeginForm("CreateUser", "User", FormMethod.Post, new { @class = "form-horizontal" })) {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(u => u.UserName, new { @class = "col-xs-3 control-label", @for = "UserName" })
+            <div class="col-xs-8">
+                @Html.EditorFor(u => u.UserName, new { htmlAttributes = new { @class = "form-control", @id = "UserName" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.RealName, new { @class = "col-xs-3 control-label", @for = "RealName" })
+            <div class="col-xs-8">
+                @Html.EditorFor(u => u.RealName, new { htmlAttributes = new { @class = "form-control", @id = "RealName" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.Pwd, new { @class = "col-xs-3 control-label", @for = "Pwd" })
+            <div class="col-xs-8">
+                @Html.EditorFor(model => model.Pwd, new { htmlAttributes = new { @class = "form-control", @id = "Pwd" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.PwdAgain, new { @class = "col-xs-3 control-label", @for = "PwdAgain" })
+            <div class="col-xs-8">
+                @Html.EditorFor(u => u.PwdAgain, new { htmlAttributes = new { @class = "form-control", @id = "PwdAgain" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.DepartmentId, new { @class = "col-xs-3 control-label", @for = "PwdAgain" })
+            <div class="col-xs-8">
+                @Html.HiddenFor(u => u.DepartmentId)
+                <ul id="departmentTree" class="ztree"></ul>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.IsActive, new { @class = "col-xs-3 control-label", @for = "IsActive" })
+            <div class="col-xs-8">
+                <div class="checkbox">
+                    <label>
+                        @Html.EditorFor(u => u.IsActive, new { htmlAttributes = new { @id = "IsActive" } })
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-xs-offset-3 col-xs-8">
+                <button type="submit" class="btn btn-raised">提交</button>
+            </div>
+        </div>
+    }
+</div>

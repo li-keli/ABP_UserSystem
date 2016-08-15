@@ -1,0 +1,114 @@
+﻿@model Cbd.Fgw.Application.System.Role.Dto.RoleAuthorizationOutput
+@{
+    ViewBag.Title = "角色授权";
+}
+
+@section scripts
+{
+    @if (ViewBag.Success != null && ViewBag.Success == "success") {
+        <script type="text/javascript">
+            $(function () {
+                $.sys.alertClose("角色授权成功！", { icon: 1 });
+            })
+        </script>
+    }
+}
+
+@section styles
+{
+    <style>
+        .row-content {
+            width: 100% !important;
+        }
+    </style>
+}
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-info-circle"></i> 角色信息</h4>
+            </div>
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.LabelFor(u => u.RoleDto.Id, new { @class = "col-xs-5 control-label" })
+                        <div class="col-xs-7 div-details-info">
+                            @Html.DisplayFor(u => u.RoleDto.Id)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(u => u.RoleDto.RoleName, new { @class = "col-xs-5 control-label" })
+                        <div class="col-xs-7 div-details-info">
+                            @Html.DisplayFor(u => u.RoleDto.RoleName)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(u => u.RoleDto.IsSystem, new { @class = "col-xs-5 control-label" })
+                        <div class="col-xs-7 div-details-info">
+                            @{
+                                var icon = Model.RoleDto.IsSystem ? "check" : "close";
+                            }
+                            <i class="fa fa-@icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(u => u.RoleDto.Describe, new { @class = "col-xs-5 control-label" })
+                        <div class="col-xs-7 div-details-info">
+                            @Html.DisplayFor(u => u.RoleDto.Describe)
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-7">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <i class="fa fa-info-circle"></i>
+                    模块信息
+                    <small class="text-danger"> （请勾选需要授权模块）</small>
+                </h4>
+            </div>
+            <div class="panel-body">
+                <div class="list-group">
+                    @using (Html.BeginForm("Authorization", "Role", FormMethod.Post, new { @class = "form-horizontal" })) {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.RoleDto.Id)
+                        foreach (var menuDto in Model.MenuDtos.Where(m => m.IsMenuGroup)) {
+                            <div class="list-group-item">
+                                <div class="row-content">
+                                    <h4 class="list-group-item-heading"><i class="@menuDto.Icon"></i> @menuDto.MenuName</h4>
+                                    <div class="list-group-item-text">
+                                        <div class="checkbox">
+                                            @foreach (var source in Model.MenuDtos.Where(m => m.ParentMenuId == menuDto.Id)) {
+                                                var isChecked = "";
+                                                foreach (var myMenuDto in Model.RoleDto.Menus) {
+                                                    if (myMenuDto.Id == source.Id) {
+                                                        isChecked = "checked";
+                                                    }
+                                                }
+                                                <label>
+                                                    <input type="checkbox" name="menuids" id="menuids" value="@source.Id" @isChecked> @source.MenuName
+                                                </label>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                        <div>
+                            <button type="submit" class="btn btn-raised btn-primary">提交</button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

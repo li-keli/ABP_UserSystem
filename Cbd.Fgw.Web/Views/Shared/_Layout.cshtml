@@ -1,0 +1,57 @@
+﻿@using System.Threading
+@using System.Web.Optimization
+@using Abp.Timing
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" href="~/favicon.ico">
+
+    <title>北京市朝阳区发改委项目管理平台</title>
+
+    @Styles.Render("~/Bundles/vendor/css")
+    @Styles.Render("~/Bundles/css")
+
+    @RenderSection("styles", required: false)
+
+    <script type="text/javascript">
+        var abp = abp || {}; abp.appPath = '@ApplicationPath';
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="@Url.Content("~/Scripts/others/html5shiv.js")"></script>
+        <script src="@Url.Content("~/Scripts/others/respond.min.js")"></script>
+    <![endif]-->
+
+    @Scripts.Render("~/Bundles/vendor/js/top")
+
+</head>
+<body>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> 控制板</li>
+        <li>@ViewBag.Title</li>
+    </ol>
+    <div class="container-fluid">
+        @RenderBody()
+    </div>
+
+    @Scripts.Render("~/Bundles/vendor/js/bottom")
+    @Scripts.Render("~/Bundles/js")
+
+    <script>
+        abp.localization.defaultSourceName = '@LocalizationSourceName';
+        //moment.locale('@Thread.CurrentThread.CurrentUICulture.Name');
+        $.material.init();
+    </script>
+
+    <script src="~/api/AbpServiceProxies/GetAll?v=@(Clock.Now.Ticks)"></script>
+    <script src="~/AbpScripts/GetScripts?v=@(Clock.Now.Ticks)" type="text/javascript"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿@model List<Cbd.Fgw.Application.System.Role.Dto.RoleDto>
+@{
+    ViewBag.Title = "用户授权";
+}
+
+@if (ViewBag.Success != null && ViewBag.Success == "success") {
+    <script type="text/javascript">
+        $.sys.alertClose("用户授权成功！", { icon: 1 });
+    </script>
+}
+
+<div class="well">
+    @using (Html.BeginForm("Authorization", "User", FormMethod.Post, new { @class = "form-horizontal" })) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            <div class="checkbox">
+                @foreach (var role in Model) {
+                    <label>
+                        <input type="checkbox" name="Roles" id="roles" value="@role.Id"> @role.RoleName
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-raised">提交</button>
+        </div>
+    }
+</div>

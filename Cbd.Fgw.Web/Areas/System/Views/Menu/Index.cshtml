@@ -1,0 +1,133 @@
+﻿@model Cbd.Fgw.Application.System.Role.Dto.RoleDto
+@{
+    ViewBag.Title = "菜单管理";
+}
+
+<div class="well">
+    <form role="form">
+        <div id="toolbar">
+            <div class="form-group label-floating pull-left">
+                <label for="i5p" class="control-label"><i class="fa fa-search"></i> 输入菜单名，按回车键搜索</label>
+                <input type="text" class="form-control" id="i5p" style="width: 400px;">
+            </div>
+
+            <div class="btn-group form-group pull-right">
+                <a href='javascript:craete();' class="btn btn-primary btn-raised">创建菜单</a>
+                <div class="btn-group">
+                    <a href="javascript:void(0)" data-target="#" class="btn btn-raised btn-primary dropdown-toggle" data-toggle="dropdown">
+                        更多操作
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)">删除菜单</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:void(0)">禁用</a></li>
+                        <li><a href="javascript:void(0)">启用</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-striped" id="table"></table>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $table = $("#table");
+
+        function craete() {
+            $.sys.create({
+                content: '@Url.Action("Create")',
+                end: function () {
+                    $table.bootstrapTable('refresh');
+                }
+            });
+        }
+
+        function details(id) {
+            $.sys.detail({
+                content: '@Url.Action("Details")\\' + id,
+                success: function (layero, index) {
+                }
+            });
+        }
+
+        function edit(id) {
+            $.sys.edit({
+                content: '@Url.Action("Edit")\\' + id,
+                success: function (layero, index) {
+                },
+                end: function () {
+                    $table.bootstrapTable('refresh');
+                }
+            });
+        }
+
+        function del(name, id) {
+            $.sys.del("是否删除菜单【" + name + "】？", function () {
+                $.post('@Url.Action("Delete")', { id: id }, function (obj) {
+                    $table.bootstrapTable('refresh');
+                    if (obj === 'success') {
+                        toastr.warning('菜单【' + name + '】，删除成功！', '系统消息');
+                    }
+                });
+            });
+        }
+
+        $(function () {
+            $table.bTable({ url: "@Url.Action("IndexList")" },
+            [
+                {
+                    field: 'id',
+                    title: 'ID'
+                },
+                {
+                    field: 'menuName',
+                    title: '菜单名称'
+                },
+                {
+                    field: 'menuUrl',
+                    title: '菜单链接'
+                },
+                {
+                    field: 'icon',
+                    title: '菜单图标',
+                    align: 'left',
+                    formatter: function (value, row, index) {
+                        if (value != '' && value != null) {
+                            return '<i class="' + value + '"></i> [ ' + value + ' ]';
+                        } else {
+                            return '';
+                        }
+                    }
+                },
+                {
+                    field: 'isMenuGroup',
+                    title: '是否为菜单组',
+                    formatter: function (value, row, index) {
+                        var isSystem = value ? "check" : "close";
+                        return '<i class="fa fa-' + isSystem + '"></i>';
+                    }
+                },
+                {
+                    field: 'describe',
+                    title: '菜单描述'
+                },
+                {
+                    field: 'tool',
+                    title: '操作',
+                    formatter: function (value, row, index) {
+                        var isSystem = row.isRoot ? "disabled" : "";
+                        return [
+                            '<button type="button" class="btn btn-noline btn-xs btn-raised btn-primary" onclick="details(' + row.id + ')">详情</button>' +
+                            '<button ' + isSystem + ' type="button" class="btn btn-noline btn-xs btn-raised btn-warning" onclick="edit(' + row.id + ')">修改</button>' +
+                            '<button ' + isSystem + ' type="button" class="btn btn-noline btn-xs btn-raised btn-danger" onclick="del(\'' + row.menuName + '\',' + row.id + ')">删除</button>'
+                        ].join('');
+                    }
+                }
+            ]);
+        });
+    </script>
+}

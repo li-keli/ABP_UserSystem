@@ -1,0 +1,59 @@
+﻿@using Cbd.Common.HtmlHelper
+@model Cbd.Fgw.Application.System.Menu.Dto.MenuDto
+@{
+    ViewBag.Title = "菜单详情";
+}
+
+<div class="well bs-component">
+    <form class="form-horizontal">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(u => u.Id, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.Id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.MenuName, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.MenuName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.MenuUrl, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.MenuUrl, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.Icon, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.Icon, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.IsMenuGroup, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8  div-details-info">
+                @Html.Iischeck(Model.IsMenuGroup)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.ParentMenu, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.ParentMenu.MenuName, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.Describe, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.Describe, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+    </form>
+</div>

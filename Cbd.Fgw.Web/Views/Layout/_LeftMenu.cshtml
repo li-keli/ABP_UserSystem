@@ -1,0 +1,93 @@
+﻿<ul class="nav" id="side-menu">
+    <li class="nav-header">
+        <div class="dropdown profile-element" style="text-align: center">
+            <span><img alt="image" class="img-circle" src="/images/profile_small.png" width="64" height="64" /></span>
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                <span class="clear">
+                    <span class="block m-t-xs"><strong class="font-bold">Beaut-zihan</strong></span>
+                    <span class="text-muted text-xs block">超级管理员<b class="caret"></b></span>
+                </span>
+            </a>
+            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                <li>
+                    <a class="J_menuItem" href="form_avatar.html">修改头像</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="profile.html">个人资料</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="contacts.html">联系我们</a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="mailbox.html">信箱</a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                    <a href="login.html">安全退出</a>
+                </li>
+            </ul>
+        </div>
+        <div class="logo-element">
+            发改委
+        </div>
+    </li>
+    <li class="active">
+        <a href="#">
+            <i class="fa fa-database"></i>
+            <span class="nav-label">项目管理</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a class="J_menuItem" href="@Url.Action("CreateUser", "User")" data-index="1">新建项目</a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="@Url.Action("CreateUser", "User")" data-index="2">项目审批</a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="@Url.Action("CreateUser", "User")" data-index="3">项目建设</a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="@Url.Action("CreateUser", "User")" data-index="4">竣工项目</a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <a href="#">
+            <i class="fa fa-bar-chart"></i>
+            <span class="nav-label">统计查询</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a class="J_menuItem" href="@Url.Action("CreateUser", "User")" data-index="5">项目统计</a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
+        <a href="#">
+            <i class="fa fa-cog"></i>
+            <span class="nav-label">系统管理</span>
+            <span class="fa arrow"></span>
+        </a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a class="J_menuItem" href="@Url.Content("system/User/Index")" data-index="6">用户管理</a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="@Url.Content("system/Role/Index")" data-index="7">角色管理</a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="@Url.Content("system/Department/Index")" data-index="8">部门管理</a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="@Url.Content("system/Menu/Index")" data-index="9">菜单管理</a>
+            </li>
+            <li>
+                <a class="J_menuItem" href="@Url.Content("system/User/Index")" data-index="10">日志管理</a>
+            </li>
+        </ul>
+    </li>
+</ul>

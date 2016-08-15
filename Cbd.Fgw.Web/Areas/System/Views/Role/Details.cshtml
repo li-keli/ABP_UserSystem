@@ -1,0 +1,31 @@
+﻿@using Cbd.Common.HtmlHelper
+@model Cbd.Fgw.Application.System.Role.Dto.RoleDto
+@{
+    ViewBag.Title = "角色详情";
+}
+
+<div class="well bs-component">
+    <form class="form-horizontal">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(u => u.Id, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.Id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.RoleName, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.DisplayFor(u => u.RoleName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(u => u.IsSystem, new { @class = "col-xs-3 control-label" })
+            <div class="col-xs-8 div-details-info">
+                @Html.Iischeck(Model.IsSystem)
+            </div>
+        </div>
+    </form>
+</div>

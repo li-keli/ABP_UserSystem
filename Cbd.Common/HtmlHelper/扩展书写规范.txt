@@ -1,0 +1,10 @@
+﻿李科笠 2016年7月26日 15:42:42
+
+扩展书写规范：
+扩展HtmlHelper，通过表达式的方法扩展，如下：
+ ModelMetadata modelMetadata = ModelMetadata.FromLambdaExpression(expression, htmlHelper.ViewData);
+ //return htmlHelper.TextBoxFor(expression, format);  
+ //return InputExtensions.HiddenHelper(htmlHelper, modelMetadata, modelMetadata.Model, false, ExpressionHelper.GetExpressionText(expression), htmlAttributes);  
+ StringBuilder sb = new StringBuilder();
+ sb.Append("传进来的参数值:" + modelMetadata.GetDisplayName() + "=" + modelMetadata.Model + "</br>");
+ sb.Append("传进来的参数值:" + modelMetadata.PropertyName + "=" + modelMetadata.Model + "</br>");
